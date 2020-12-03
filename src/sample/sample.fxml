@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:controller="sample.Controller" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="Sten" layoutX="107.0" layoutY="339.0" mnemonicParsing="false" onAction="#kastSten" text="Sten" />
+      <Button fx:id="Saks" layoutX="273.0" layoutY="339.0" mnemonicParsing="false" onAction="#kastSaks" text="Saks" />
+      <Button fx:id="Papir" layoutX="443.0" layoutY="339.0" mnemonicParsing="false" onAction="#kastPapir" text="Papir" />
+      <ImageView fx:id="Billede" fitHeight="150.0" fitWidth="200.0" layoutX="64.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Billede2" fitHeight="150.0" fitWidth="200.0" layoutX="343.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="Save" layoutX="86.0" layoutY="31.0" mnemonicParsing="false" onAction="#saveGame" text="Save" />
+      <Button fx:id="Load" layoutX="482.0" layoutY="31.0" mnemonicParsing="false" onAction="#loadGame" text="Load" />
+      <TextField fx:id="Score" layoutX="228.0" layoutY="31.0" onAction="#showScore" />
+   </children>
+</AnchorPane>
