@@ -6,10 +6,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import jdk.swing.interop.SwingInterOpUtils;
+import javafx.scene.shape.Path;
 
+import java.io.*;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Controller {
 
@@ -48,6 +51,10 @@ public class Controller {
     Image papir = new Image("sample/billeder/Papir.png");
     Image saks = new Image("sample/billeder/Saks.png");
 
+    int player = 0;
+    int ai = 0;
+
+    String gameData = "";
 
 
     @FXML
@@ -58,46 +65,51 @@ public class Controller {
         Billede.setImage(i1);
         System.out.println(d.toString() + " spillere valgte papir ");
 
-        if (Computer  == PAPIR) {
+        if (Computer == PAPIR) {
             Billede2.setImage(papir);
-            System.out.println("Draw" );
-
+            System.out.println("Draw");
+            gameData = ("player:papir - computer:papir");
 
         } else if (Computer == SAKS) {
             Billede2.setImage(saks);
-            System.out.println("You win");
-
-
+            System.out.println("AI wins");
+            ai++;
+            gameData = ("player:papir - computer:saks");
         } else if (Computer == STEN) {
             Billede2.setImage(sten);
-            System.out.println("Computer loses");
-
+            System.out.println("Player wins");
+            player++;
+            gameData = ("player:papir - computer:sten");
         }
-
+        Score.setText(player + "-" + ai);
 
     }
+
     @FXML
     void kastSaks(ActionEvent event) {
         int Computer = random.nextInt(3) + 1;
 
         Image i1 = new Image("sample/billeder/Saks.png");
         Billede.setImage(i1);
-        System.out.println(d.toString() + " spillere valgte saks " );
+        System.out.println(d.toString() + " spillere valgte saks ");
 
-        if (Computer  == PAPIR) {
+        if (Computer == PAPIR) {
             Billede2.setImage(papir);
-            System.out.println("Computer loses");
-
+            System.out.println("Player wins");
+            player++;
+            gameData = ("player:saks - computer:papir");
         } else if (Computer == SAKS) {
             Billede2.setImage(saks);
             System.out.println("draw");
+            gameData = ("player:saks - computer:saks");
 
-        } else if (Computer == STEN){
+        } else if (Computer == STEN) {
             Billede2.setImage(sten);
-            System.out.println("You win");
-
+            System.out.println("Ai wins");
+            ai++;
+            gameData = ("player:saks - computer:sten");
         }
-
+        Score.setText(player + "-" + ai);
 
     }
 
@@ -107,42 +119,73 @@ public class Controller {
 
         Image i1 = new Image("sample/billeder/Sten.png");
         Billede.setImage(i1);
-        System.out.println(d.toString() + " spillere valgte sten " );
+        System.out.println(d.toString() + " spillere valgte sten ");
 
-        if (Computer  == PAPIR) {
+        if (Computer == PAPIR) {
             Billede2.setImage(papir);
-            System.out.println("Computer win");
-
+            System.out.println("AI wins");
+            ai++;
+            gameData = ("player:sten - computer:papir");
         } else if (Computer == SAKS) {
             Billede2.setImage(saks);
-            System.out.println("You win");
-
+            System.out.println("Player wins");
+            player++;
+            gameData = ("player:sten - computer:saks");
         } else if (Computer == STEN) {
             Billede2.setImage(sten);
             System.out.println("draw");
+            gameData = ("player:sten - computer:sten");
 
 
         }
-
+        Score.setText(player + "-" + ai);
     }
 
     @FXML
-    void loadGame(ActionEvent event) {
+    void loadGame(ActionEvent event) throws IOException {
+
+
+        String path = "StenSaksPapirLog.txt";
+        Scanner scanner = new Scanner(new File(path));
+
+        //read line by line
+        while (scanner.hasNext()) {
+            //process each line
+            String next = scanner.next();
+
+            if (next.equals("er:")){
+                Score.setText(scanner.next());
+            }
+
+        }
+        scanner.close();
+
 
     }
+
+
 
     @FXML
     void saveGame(ActionEvent event) {
 
+
+        try {
+
+            FileWriter myWriter = new FileWriter("StenSaksPapirLog.txt");
+            myWriter.write(d.toString() + "\n");
+
+            myWriter.write(gameData + "\n");
+
+
+            myWriter.write("\nscoren er: " + Score.getText());
+            myWriter.close();
+            System.out.println("Successfully saved the file");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+
+    }
     }
 
-    @FXML
-    void showScore(ActionEvent event) {
-
-    Score.appendText("");
-
-
-
-    }
-
-}
